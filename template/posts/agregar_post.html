@@ -1,0 +1,23 @@
+{% include 'BASE.html' %}
+  
+      <form  method="POST">
+        {% csrf_token %}
+        <input type="text" name="post_titulo" required>
+        <textarea name="post_cuerpo" id="" cols="30" rows="10" required></textarea>
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            Categorias
+          
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">    
+            
+            {% for categoria in categorias %}        
+              <li><a class="dropdown-item" href="?id={{categoria.id}}">{{ categoria.nombre }}</a></li>
+            {% endfor %}
+          </ul>
+        </button>
+        </div>   
+        <input type="submit" value="Agregar Post">
+      </form>
+      
+{% include 'BASE_FOOTER.html' %}
+

@@ -1,0 +1,20 @@
+.Navbar{
+	position: fixed;
+} 
+.imagen-logo {
+	height: 120px;
+	width: 220px;
+	position: relative;
+	top: -30px;
+	right: 80px;
+	display: grid;
+	place-items: center;
+}
+
+.navbar-brand{
+	height: 70px;
+}
+
+.nav-item a{
+	text-decoration-color: white;
+}

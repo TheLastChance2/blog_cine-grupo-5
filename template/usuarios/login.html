@@ -1,0 +1,23 @@
+{%load static%} <!--Esta función le indica al archivo HTML dónde esta la carpeta static-->
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/estilo_login.css' %}">
+
+<title>Inicio Sesion</title>    
+
+{% include 'BASE.html' %}
+
+<div class="caja_registro">
+
+    <div class="formulario_diseño">
+        <form action="" method="POST" > 
+            {% csrf_token %}
+
+            {{ form }}
+
+        <button type="submit" class="btn btn-primary">Iniciar Sesion</button>
+        </form>
+    </div>
+</div>
+
+
+{% include 'BASE_FOOTER.html' %}

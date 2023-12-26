@@ -1,0 +1,15 @@
+
+<link rel="stylesheet" type="text/css" href="">
+
+{% include 'BASE.html' %}
+    
+    <div class="confirmardelete" style="height: 50vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+       <form method="POST">
+            {% csrf_token %}
+            <p>¿Esta seguro de que quiere eliminar el comentario?</p>
+            {{ form }}
+            <button type="submit" class="btn btn-primary">Confirmar</button>
+       </form>
+    </div>
+
+{% include 'BASE_FOOTER.html' %}

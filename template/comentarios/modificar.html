@@ -1,0 +1,16 @@
+{%load static%}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/estilo_comentarios.css' %}">
+
+{% include 'BASE.html' %}
+
+<div class="contenedor_paraeditar" style="height: 80vh; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+       <form method="POST">
+            {% csrf_token %}
+            <p>Escriba su nuevo comentario</p>        
+            {{ form }}
+            <button type="submit" class="btn btn-primary">Confirmar</button>
+       </form>
+</div>
+
+{% include 'BASE_FOOTER.html' %}

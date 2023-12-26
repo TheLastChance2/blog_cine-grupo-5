@@ -1,0 +1,103 @@
+{% include 'BASE.html' %}
+
+<div class="Contenedor1000" style="height: 150vh; background-color: white; display: flex; flex-direction: column; align-items: left; padding: 5px;">
+    <!-- Categorias --> 
+    <div class="titulo_categorias" style="height: 10vh; display: flex; justify-content: center; align-items: center; border-bottom: 1px solid black;">
+    <h2>Posteos por categoría</h2> 
+    </div> 
+    <div class="contenedor_muestra_posteo" style="padding: 5px;">
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            Categorias
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item" href="{% url 'posts:post_realizado' %}">Todas</a></li>
+            {% for categoria in categorias %}
+              <li><a class="dropdown-item" href="?id={{categoria.pk}}">{{ categoria.nombre }}</a></li>
+            {% endfor %}    
+          </ul>
+          <a class="btn btn-secondary" href="?orden=asc">ASC</a>
+          <a class="btn btn-secondary" href="?orden=desc">DESC</a>
+          <a class="btn btn-secondary" href="?orden=a">A-Z</a>
+          <a class="btn btn-secondary" href="?orden=z">Z-A</a>
+        </div> 
+    </div>      
+
+    {% for post in posteos %}    
+        <br>  
+
+    <!--<div class="container">--> 
+       
+    <div class="card mb-3" style="max-width: 1080px;">
+        <div class="row g-0">
+          <div class="col-md-3">
+            <img src="{{ post.imagen.url }}" class="img-fluid rounded-start" alt="falta_imagen">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{ post.titulo }}</h5>
+              <p class="card-text">{{ post.cuerpo|truncatechars:30 }} <a href="{% url 'posts:post_detail' post.pk %}">Seguir leyendo...</a></p>
+              <p class="card-text"><small class="text-muted">{{ post.fecha_creacion }}</small></p>
+              <!-- <p class="card-text"><small class="text-muted">{{ post.fecha_creacion|date:'d M Y' }}</small></p> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <!--</div>-->
+      {% endfor %}  
+      {% include "paginador.html" %}
+      <!--<h2>Cantidad de Paginas: </h2>-->
+    {{ paginator.num_pages }}
+      {% if paginator.num_pages > 1%}
+
+    <div class="d-flex justify-content-center">
+        <ul class="pagination">
+            {% if posteos.has_previous %}
+                <li class="page-item d-none d-sm-block"><a class="page-link" href="?page={{ posteos.previous_page_number }}#pagtable">Anterior</a></li>
+            {% endif %}
+            {% for page in paginator.page_range %}
+                {% if forloop.last and page != posteos.number and paginator.num_pages > 7 %} 
+                    {% if posteos.next_page_number != paginator.num_pages%}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ posteos.number | add:1}}#pagtable">...</a>
+                    </li>
+                    {% endif %}
+                <li class="page-item">
+                        <a class="page-link" href="?page={{paginator.num_pages}}#pagtable">{{paginator.num_pages}}</a>
+                </li>
+                {% endif %}
+                {% if page == posteos.number and page > 7 %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page | add:-1 }}#pagtable">...</a>
+                </li>    
+                {% endif %}
+                {% if page < 7 or page == posteos.number %}
+                <li class="page-item {% if page == posteos.number %}active{% endif %}">
+                    <a class="page-link" href="?page={{ page }}#pagtable">{{ page }}</a>
+                </li>
+                {% endif %}
+            {% endfor %}
+            {% if posteos.has_next %}
+                <li class="page-item d-none d-sm-block">
+                    <a class="page-link" href="?page={{ posteos.next_page_number }}#pagtable">Siguiente</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+    <div class="d-flex justify-content-center d-sm-none">            
+        {% if posteos.has_previous %}
+            <span class="page-item"><a  class="page-link" href="?page={{ posteos.previous_page_number }}#pagtable">Anterior</a></span>
+        {% endif %}
+        {% if posteos.has_next %}
+            <span class="page-item"><a class="page-link" href="?page={{ posteos.next_page_number }}#pagtable">Siguiente</a></span>
+        {% endif %}
+        <br>
+        <br>
+    </div>
+    {% endif %}
+</div>
+
+{% include 'BASE_FOOTER.html' %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
